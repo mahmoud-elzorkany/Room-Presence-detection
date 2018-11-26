@@ -1,0 +1,30 @@
+<meta http-equiv="refresh" content="5" />
+
+{% if user.is_authenticated %}
+{% if room_list %}
+    <table style="width:50%">
+        <tr>
+            <th>Room</th>
+            <th>Availability</th> 
+        </tr>
+        {% for room in room_list %}
+            <tr>
+                <td><li><a href="detail/{{ room.name }}/">{{ room.name }}</a></li></td>
+                {% if room.occupied %}
+                    <td bgcolor = "ff7c7c"><p>occupied</p></td>
+                {% else %}
+                    <td bgcolor = "affcc5"><p>avaliable</p></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No rooms are available.</p>
+{% endif %}
+<p><a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+  <p>Access denied - you are not logged in!</p>
+  <a href="{% url 'login' %}">Login</a>
+
+{% endif %}
+{% csrf_token %}
